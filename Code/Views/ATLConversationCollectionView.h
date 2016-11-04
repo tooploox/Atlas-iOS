@@ -28,4 +28,6 @@
 
 @interface ATLConversationCollectionView : UICollectionView
 
+- (void)registerHeaderClass:(Class<ATLConversationCollectionViewHeaderProtocol>)headerClass;
+
 @end

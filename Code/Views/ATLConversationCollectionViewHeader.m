@@ -21,14 +21,14 @@
 #import "ATLConstants.h"
 #import "ATLMessagingUtilities.h"
 
-@interface ATLConversationCollectionViewHeader ()
+@interface ATLConversationCollectionViewBaseHeader ()
 
 @property (nonatomic) UILabel *dateLabel;
 @property (nonatomic) UILabel *participantLabel;
 
 @end
 
-@implementation ATLConversationCollectionViewHeader
+@implementation ATLConversationCollectionViewBaseHeader
 
 NSString *const ATLConversationViewHeaderIdentifier = @"ATLConversationViewHeaderIdentifier";
 
@@ -39,19 +39,19 @@ CGFloat const ATLConversationViewHeaderDateBottomPadding = 8;
 CGFloat const ATLConversationViewHeaderParticipantNameBottomPadding = 3;
 CGFloat const ATLConversationViewHeaderEmptyHeight = 1;
 
-+ (ATLConversationCollectionViewHeader *)sharedHeader
++ (ATLConversationCollectionViewBaseHeader *)sharedHeader
 {
-    static ATLConversationCollectionViewHeader *_sharedHeader;
+    static ATLConversationCollectionViewBaseHeader *_sharedHeader;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedHeader = [ATLConversationCollectionViewHeader new];
+        _sharedHeader = [ATLConversationCollectionViewBaseHeader new];
     });
     return _sharedHeader;
 }
 
 + (void)initialize
 {
-    ATLConversationCollectionViewHeader *proxy = [self appearance];
+    ATLConversationCollectionViewBaseHeader *proxy = [self appearance];
     proxy.participantLabelTextColor = [UIColor grayColor];
     proxy.participantLabelFont = [UIFont systemFontOfSize:11];
 }
@@ -130,7 +130,7 @@ CGFloat const ATLConversationViewHeaderEmptyHeight = 1;
 {
     if (!dateString && !participantName) return ATLConversationViewHeaderEmptyHeight;
     
-    ATLConversationCollectionViewHeader *header = [self sharedHeader];
+    ATLConversationCollectionViewBaseHeader *header = [self sharedHeader];
     // Temporarily adding the view to the hierarchy so that UIAppearance property values will be set based on containment.
     [view addSubview:header];
     [header removeFromSuperview];

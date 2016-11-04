@@ -34,7 +34,7 @@
 
 @import AVFoundation;
 
-@interface ATLConversationViewController () <UICollectionViewDataSource, UICollectionViewDelegate, CLLocationManagerDelegate>
+@interface ATLConversationViewController () <CLLocationManagerDelegate>
 
 @property (nonatomic) ATLConversationDataSource *conversationDataSource;
 @property (nonatomic, readwrite) LYRQueryController *queryController;
@@ -52,6 +52,7 @@
 @property (nonatomic) BOOL canDisableAddressBar;
 @property (nonatomic) dispatch_queue_t animationQueue;
 @property (nonatomic) BOOL expandingPaginationWindow;
+@property (nonatomic) Class<ATLConversationCollectionViewHeaderProtocol> headerClass;
 
 @end
 
@@ -119,6 +120,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     _sectionFooters = [NSHashTable weakObjectsHashTable];
     _objectChanges = [NSMutableArray new];
     _animationQueue = dispatch_queue_create("com.atlas.animationQueue", DISPATCH_QUEUE_SERIAL);
+    _headerClass = [ATLConversationCollectionViewBaseHeader class];
 }
 
 - (void)loadView
@@ -379,7 +381,10 @@ static NSInteger const ATLPhotoActionSheet = 1000;
         return header;
     }
     if (kind == UICollectionElementKindSectionHeader) {
-        ATLConversationCollectionViewHeader *header = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:ATLConversationViewHeaderIdentifier forIndexPath:indexPath];
+        ATLConversationCollectionViewHeader *header = [self.collectionView
+                                                       dequeueReusableSupplementaryViewOfKind:kind
+                                                       withReuseIdentifier:NSStringFromClass(_headerClass)
+                                                       forIndexPath:indexPath];
         [self configureHeader:header atIndexPath:indexPath];
         [self.sectionHeaders addObject:header];
         return header;
@@ -404,7 +409,8 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if ([self shouldDisplaySenderLabelForSection:section]) {
         participantName = [self participantNameForMessage:[self.conversationDataSource messageAtCollectionViewSection:section]];
     }
-    CGFloat height = [ATLConversationCollectionViewHeader headerHeightWithDateString:dateString participantName:participantName inView:self.collectionView];
+    
+    CGFloat height = [_headerClass headerHeightWithDateString:dateString participantName:participantName inView:self.collectionView];
     return CGSizeMake(0, height);
 }
 
@@ -519,8 +525,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 - (BOOL)shouldDisplaySenderLabelForSection:(NSUInteger)section
 {
-    if (self.conversation.participants.count <= 2) return NO;
-    
     LYRMessage *message = [self.conversationDataSource messageAtCollectionViewSection:section];
     if ([message.sender.userID isEqualToString:self.layerClient.authenticatedUser.userID]) return NO;
     if (section > ATLNumberOfSectionsBeforeFirstMessageSection) {
@@ -1013,6 +1017,14 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 - (void)registerClass:(Class<ATLMessagePresenting>)cellClass forMessageCellWithReuseIdentifier:(NSString *)reuseIdentifier
 {
     [self.collectionView registerClass:cellClass forCellWithReuseIdentifier:reuseIdentifier];
+}
+
+- (void)registerHeaderClass:(Class<ATLConversationCollectionViewHeaderProtocol>)headerClass
+{
+    [self.collectionView
+        registerClass:headerClass
+        forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+        withReuseIdentifier:NSStringFromClass(headerClass)];
 }
 
 - (void)reloadCellForMessage:(LYRMessage *)message

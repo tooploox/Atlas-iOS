@@ -25,11 +25,24 @@
 NS_ASSUME_NONNULL_BEGIN
 extern NSString *const ATLConversationViewHeaderIdentifier;
 
+@protocol ATLConversationCollectionViewHeaderProtocol
+
+@property (nonatomic, null_unspecified) LYRMessage *message;
+@property (nonatomic) UIFont *participantLabelFont UI_APPEARANCE_SELECTOR;
+@property (nonatomic) UIColor *participantLabelTextColor UI_APPEARANCE_SELECTOR;
+
+- (void)updateWithParticipantName:(NSString *)participantName;
+- (void)updateWithAttributedStringForDate:(NSAttributedString *)date;
++ (CGFloat)headerHeightWithDateString:(NSAttributedString *)dateString participantName:(NSString *)participantName inView:(UIView *)view;
+@end
+
+typedef UICollectionReusableView<ATLConversationCollectionViewHeaderProtocol> ATLConversationCollectionViewHeader;
+
 /**
  @abstract The `ATLConversationCollectionViewHeader` class provides support for displaying
  dates and sender names above message cells.
  */
-@interface ATLConversationCollectionViewHeader : UICollectionReusableView
+@interface ATLConversationCollectionViewBaseHeader : UICollectionReusableView <ATLConversationCollectionViewHeaderProtocol>
 
 /**
  @abstract The message associated with the header.

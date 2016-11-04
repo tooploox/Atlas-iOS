@@ -23,6 +23,7 @@
 #import <MapKit/MapKit.h>
 #import "ATLParticipant.h"
 #import "ATLBaseConversationViewController.h"
+#import "ATLConversationCollectionViewHeader.h"
 
 typedef NS_ENUM(NSUInteger, ATLAvatarItemDisplayFrequency) {
     ATLAvatarItemDisplayFrequencySection,
@@ -182,7 +183,7 @@ NS_ASSUME_NONNULL_BEGIN
  a Layer conversation and the ability to send messages. The controller's design and functionality closely correlates with
  the conversation view controller in Messages.
 */
-@interface ATLConversationViewController : ATLBaseConversationViewController <ATLAddressBarViewControllerDelegate, ATLMessageInputToolbarDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LYRQueryControllerDelegate>
+@interface ATLConversationViewController : ATLBaseConversationViewController <ATLAddressBarViewControllerDelegate, ATLMessageInputToolbarDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LYRQueryControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate>
 
 ///---------------------------------------
 /// @name Initializing a Controller
@@ -235,6 +236,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param reuseIdentifier The string to be associated with the class.
  */
 - (void)registerClass:(Class<ATLMessagePresenting>)cellClass forMessageCellWithReuseIdentifier:(NSString *)reuseIdentifier;
+
+- (void)registerHeaderClass:(Class<ATLConversationCollectionViewHeaderProtocol>) headerClass;
 
 /**
  @abstract Reloads the cell for the given Message.

@@ -64,13 +64,19 @@ NSString *const ATLConversationCollectionViewAccessibilityIdentifier = @"Convers
             forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                    withReuseIdentifier:ATLMoreMessagesHeaderIdentifier];
     
-    [self registerClass:[ATLConversationCollectionViewHeader class]
+    [self registerClass:[ATLConversationCollectionViewBaseHeader class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                    withReuseIdentifier:ATLConversationViewHeaderIdentifier];
     
     [self registerClass:[ATLConversationCollectionViewFooter class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                    withReuseIdentifier:ATLConversationViewFooterIdentifier];
+}
+
+- (void)registerHeaderClass:(Class<ATLConversationCollectionViewHeaderProtocol>)headerClass {
+    [self registerClass:[ATLConversationCollectionViewBaseHeader class]
+        forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+            withReuseIdentifier:NSStringFromClass(headerClass)];
 }
 
 @end
