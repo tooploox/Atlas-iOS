@@ -1021,6 +1021,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 
 - (void)registerHeaderClass:(Class<ATLConversationCollectionViewHeaderProtocol>)headerClass
 {
+    _headerClass = headerClass;
     [self.collectionView
         registerClass:headerClass
         forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
