@@ -66,7 +66,7 @@ NSString *const ATLConversationCollectionViewAccessibilityIdentifier = @"Convers
     
     [self registerClass:[ATLConversationCollectionViewBaseHeader class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                   withReuseIdentifier:ATLConversationViewHeaderIdentifier];
+                   withReuseIdentifier:@"ATLConversationCollectionViewBaseHeader"];
     
     [self registerClass:[ATLConversationCollectionViewFooter class]
             forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
