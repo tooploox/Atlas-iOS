@@ -19,6 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ATLParticipant.h"
 
 @class LYRMessage;
 
@@ -34,6 +35,11 @@ extern NSString *const ATLConversationViewHeaderIdentifier;
 - (void)updateWithParticipantName:(NSString *)participantName;
 - (void)updateWithAttributedStringForDate:(NSAttributedString *)date;
 + (CGFloat)headerHeightWithDateString:(NSAttributedString *)dateString participantName:(NSString *)participantName inView:(UIView *)view;
+
+@optional
+
+- (void)updateWithAtlasParticipant:(id<ATLParticipant>) participant;
+
 @end
 
 typedef UICollectionReusableView<ATLConversationCollectionViewHeaderProtocol> ATLConversationCollectionViewHeader;

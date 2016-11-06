@@ -492,6 +492,11 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     }
     if ([self shouldDisplaySenderLabelForSection:indexPath.section]) {
         [header updateWithParticipantName:[self participantNameForMessage:message]];
+        
+        if ([header respondsToSelector: @selector(updateWithAtlasParticipant:)]) {
+            id<ATLParticipant> participant = [self participantForIdentity:message.sender];
+            [header updateWithAtlasParticipant: participant];
+        }
     }
 }
 
