@@ -401,6 +401,7 @@ static NSInteger const ATLPhotoActionSheet = 1000;
     if (section == ATLMoreMessagesSection) {
         return self.showingMoreMessagesIndicator ? CGSizeMake(0, 30) : CGSizeZero;
     }
+    
     NSAttributedString *dateString;
     NSString *participantName;
     if ([self shouldDisplayDateLabelForSection:section]) {
