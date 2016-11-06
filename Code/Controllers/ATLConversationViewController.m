@@ -527,7 +527,6 @@ static NSInteger const ATLPhotoActionSheet = 1000;
 - (BOOL)shouldDisplaySenderLabelForSection:(NSUInteger)section
 {
     LYRMessage *message = [self.conversationDataSource messageAtCollectionViewSection:section];
-    if ([message.sender.userID isEqualToString:self.layerClient.authenticatedUser.userID]) return NO;
     if (section > ATLNumberOfSectionsBeforeFirstMessageSection) {
         LYRMessage *previousMessage = [self.conversationDataSource messageAtCollectionViewSection:section - 1];
         if ([previousMessage.sender.userID isEqualToString:message.sender.userID]) {
