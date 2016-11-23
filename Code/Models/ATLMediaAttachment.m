@@ -503,6 +503,7 @@ ALAsset *ATLMediaAttachmentFromAssetURL(NSURL *assetURL, ALAssetsLibrary *assetL
                             dispatch_semaphore_signal(semaphore);
                         }
                     }];
+                    dispatch_semaphore_signal(semaphore);
                 } failureBlock:^(NSError *error) {
                     dispatch_semaphore_signal(semaphore);
                 }];
