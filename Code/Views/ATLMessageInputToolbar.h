@@ -140,6 +140,7 @@ extern NSString *const ATLMessageInputToolbarAccessibilityLabel;
  @default YES
  */
 @property(nonatomic) BOOL displaysRightAccessoryImage;
+@property(nonatomic) BOOL displaysRightAccessoryImageWhenTextEnterd;
 
 /**
  @abstract An automatically resizing message composition field.
