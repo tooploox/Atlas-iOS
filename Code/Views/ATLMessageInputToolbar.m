@@ -69,6 +69,7 @@ static CGFloat const ATLButtonHeight = 28.0f;
         self.accessibilityLabel = ATLMessageInputToolbarAccessibilityLabel;
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.displaysRightAccessoryImageWhenTextEnterd = NO;
         
         NSBundle *resourcesBundle = ATLResourcesBundle();
         self.leftAccessoryImage = [UIImage imageNamed:@"camera_dark" inBundle:resourcesBundle compatibleWithTraitCollection:nil];
@@ -370,7 +371,7 @@ static CGFloat const ATLButtonHeight = 28.0f;
 
 - (void)configureRightAccessoryButtonState
 {
-    if (self.textInputView.text.length) {
+    if (self.textInputView.text.length && self.displaysRightAccessoryImageWhenTextEnterd == false) {
         [self configureRightAccessoryButtonForText];
         self.rightAccessoryButton.enabled = YES;
     } else {
